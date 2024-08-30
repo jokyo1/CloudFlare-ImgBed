@@ -1,330 +1,55 @@
-# CloudFlare-ImgBed
+# sanyue_imghub
 
-免费图片托管解决方案，基于 Cloudflare Pages 和 telegra.ph（图片通过压缩，不受5MB大小限制） 。
+- 合并了前后端，pages部署时需要指定安装命令 npm install && npm run build ; 并设置部署目录 /dist
 
-**体验地址**：[Sanyue ImgHub (demo-cloudflare-imgbed.pages.dev)](https://demo-cloudflare-imgbed.pages.dev/)
+## Introduction
 
-**体验视频**：[CloudFlare免费图床，轻松守护你的每一份精彩！_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1y3WGe4EGh/?vd_source=da5ecbe595e41089cd1bed95932b8bfd)
+[cf-pages/Telegraph-Image](https://github.com/cf-pages/Telegraph-Image)项目的一个新前端，实现了**登录鉴权**、**上传图片预览**、**一键切换上传方式**（**拖拽上传**、**粘贴上传**）、**多文件上传**、**整体复制**、**多格式复制**等功能。
 
-**相关优质博文（感谢每一位鼎力支持的热心大佬）：**
-
-- [完全免费，图文教程手把手教你使用cloudflare搭建一个无限空间的私人图床 支持身份认证与成人元素鉴定！ - yunsen2025的小窝](https://www.yunsen2025.top/archives/265)
-
-**注意**：本仓库为[Telegraph-Image](https://github.com/cf-pages/Telegraph-Image)项目的重制版，如果你觉得本项目不错，在支持本项目的同时，也请支持原项目。
-
-## 1.Introduction
-
-免费图片托管解决方案，保留原版全部功能的基础上，实现了**登录鉴权**、**页面自定义**、**上传图片预览**、**一键切换上传方式**（**拖拽上传**、**粘贴上传**）、**多文件上传**、**整体复制**、**多格式复制**、**上传前自动压缩**（可上传>5MB图片）等功能。
-
-![](https://alist.sanyue.site/d/imgbed/202408191757569.png)
+![](https://alist.sanyue.site/d/imgbed/202407211140068.png)
 
 ![](https://alist.sanyue.site/d/imgbed/202407221043832.png)
 
-![](https://alist.sanyue.site/d/imgbed/202408211614665.png)
+![](https://alist.sanyue.site/d/imgbed/202407221044182.png)
 
-![](https://alist.sanyue.site/d/imgbed/202408211614780.png)
+![image-20240722104418816](https://alist.sanyue.site/d/imgbed/202407221048648.png)
 
-## 2.Features
+## Features
 
-- **开源**
-  - 前端开源（可自行修改、打包使用）
+- 前端开源（可自行修改、打包使用）
+- 流畅丝滑的过渡动画~
+- 支持批量上传（不限同时选择文件数量，但为了保证稳定性，同时处于上传状态的文件最多为10个）
+- 上传文件实现呼吸灯效果
+- 上传显示实时上传进度
+- 支持整体复制和单独复制（整体复制即将所有链接通过换行串联起来后复制）
+- 支持MarkDown、HTML和原始链接三种格式复制
+- 上传后图片无需手动点击，可直接展示在管理页面中
+- 支持Web和API上传认证（感谢[hl128k](https://github.com/hl128k)）
+- 支持访问域名限制（感谢[hl128k](https://github.com/hl128k)）
+- 支持一键切换上传方式（拖拽点击、粘贴）
 
-- **炫酷的动效（**
-  - 流畅丝滑的过渡动画~
-  - 上传文件实现呼吸灯效果
-  
-- **人性化上传**
-  - 支持一键切换上传方式（**拖拽点击、粘贴**）
-  - 粘贴上传支持**文件**和**URL**
-  - 支持批量上传（不限同时选择文件数量，但为了保证稳定性，同时处于上传状态的文件最多为10个）
-  - 上传显示实时上传进度
-  - **上传后图片无需手动点击，可直接展示在管理页面中**
-  - **突破5MB大小限制，超过5MB的图片上传前会自动压缩**（超过5MB的视频暂不支持）
-  
-- **多样化复制**
-  
-  - 支持**整体复制**和**单独复制**（整体复制即将所有链接通过换行串联起来后复制）
-  - 支持**MarkDown、HTML、BBCode和原始链接**四种格式复制
-  - 上传完成后直观展示四种格式链接
-  
-- **支持身份认证、防滥用**
-  - 支持Web和API**上传认证**（感谢[hl128k](https://github.com/hl128k)）
-  - 支持访问域名限制（感谢[hl128k](https://github.com/hl128k)）
-  
-- **支持页面自定义**
-  - 页面背景支持**单图**、**自定义多图轮播**、**bing随机图轮播**等多种模式
-  - 自定义图床名称和Logo
-  - 自定义网站标题和Icon
-  
-- **一些小功能**
-  - 支持**随机图**API，从图床中随机返回一张图片
-  
-- **以及原版所有特性**
+## Deployment
 
-  > 1.无限图片储存数量，你可以上传不限数量的图片
-  >
-  > 2.无需购买服务器，托管于 Cloudflare 的网络上，当使用量不超过 Cloudflare 的免费额度时，完全免费
-  >
-  > 3.无需购买域名，可以使用 Cloudflare Pages 提供的`*.pages.dev`的免费二级域名，同时也支持绑定自定义域名
-  >
-  > 4.支持图片审查 API，可根据需要开启，开启后不良图片将自动屏蔽，不再加载
-  >
-  > 5.支持后台图片管理，可以对上传的图片进行在线预览，添加白名单，黑名单等操作
+如果要在**原项目基础上部署新前端**，并且具有定制化需求，只需要三步（**前提是你需要有基本的`git`、`nodejs`等工具的使用能力**）：
 
+1. 将该项目拉到本地，`npm install`，修改环境变量`.env`中的`VUE_APP_SITE_URL`为你自己图床的URL
+2. 进行DIY，然后`npm run build`，进入打包好的`/dist`目录，将里面的所有内容复制到`telegraph-image`项目的根目录（如果你还想保留原来的前端，请将原来的`index.html`重命名为`index-bk.html`）
+3. 将修改好的`telegraph-image`项目部署上去即可，具体方法参照原项目
 
-## 3.Deployment
+如果你需要**开箱即用**的完整项目，我将修改好的项目保存在[MarSeventh/CloudFlare-ImgBed](https://github.com/MarSeventh/CloudFlare-ImgBed)仓库中，你可以遵循以下步骤使用：
 
-### 3.1直接使用
+1. fork上述仓库
+2. 按照原项目部署流程在CF上部署上述项目
+3. 所有环境变量按照原项目填写即可（注意如果要完全迁移，原来的KV数据库一定要保留！！！）
 
-**部署方式**与**环境变量**和原仓库保持一致。（**修改完环境变量，重新部署才能生效**，见[3.1章最后一节](#3.1.10注意！！！)）
-
-#### 3.1.1提前准备
-
-- **部署于Cloudflare**
-
-  只需准备一个**Cloudflare账户**，然后按照[3.1.2.1节](#3.1.2.1部署于Cloudflare)的步骤即可完成部署。
-
-- **部署于服务器**
-
-  如果Cloudflare的**有限访问次数**不能满足你的需求，并且你拥有自己的服务器，可以参照[3.1.2.2节](#3.1.2.2部署于服务器)的教程在服务器上模拟Cloudflare的环境，并开放对应的端口访问服务。
-
-  注意由于服务器操作系统、硬件版本复杂多样，相关教程**无法确保适合每一位用户**，遇到报错请尽量利用搜索引擎解决，无法解决也可以提issue寻求帮助。
-
-#### 3.1.2手把手教程
-
-##### 3.1.2.1部署于Cloudflare
-
-依托于CF的强大能力，只需简单 3 步，即可部署本项目，拥有自己的图床。
-
-1. Fork 本仓库 (注意：必须使用 Git 或者 Wrangler 命令行工具部署后才能正常使用，[文档](https://developers.cloudflare.com/pages/functions/get-started/#deploy-your-function))
-
-2. 打开 Cloudflare Dashboard，进入 Pages 管理页面，选择创建项目，选择`连接到 Git 提供程序`
-
-![1](https://alist.sanyue.site/d/imgbed/202407201047300.png)
-
-3. 按照页面提示输入项目名称，选择需要连接的 git 仓库，点击`部署站点`即可完成部署
-
-##### 3.1.2.2部署于服务器
-
-1. 安装服务器操作系统对应的`node.js`，经测试`v22.5.1`版本可以正常使用。（安装教程自行search）
-
-2. 切换到项目根目录，运行`npm install`，安装所需依赖。
-
-3. 在项目根目录下新建`wrangler.toml`配置文件，其内容为项目名称，环境变量等，可根据后文环境变量配置进行个性化修改。（详情参见官方文档[Configuration - Wrangler (cloudflare.com)](https://developers.cloudflare.com/workers/wrangler/configuration/)）
-
-   > 配置文件样例：
-   >
-   > ```toml
-   > name = "cloudflare-imgbed"
-   > compatibility_date = "2024-07-24"
-   > 
-   > [vars]
-   > ModerateContentApiKey = "your_key"
-   > AllowRandom = "true"
-   > BASIC_USER = "user"
-   > BASIC_PASS = "pass"
-   > ```
-
-4. 在项目根目录下运行`npm run start`，至此，正常情况下项目已经成功部署。
-
-   程序默认运行在`8080`端口上，使用`nginx`等服务器反代`127.0.0.1:8080`即可外网访问服务。如需修改端口，可在`package.json`中修改`start`脚本的`port`参数（如下图）。
-
-   ![](https://alist.sanyue.site/d/imgbed/202408191832173.png)
-
-   正常启动，控制台输出如下：
-
-   ![202408191829163](https://alist.sanyue.site/d/imgbed/202408191855625.png)
-
-#### 3.1.3后台管理
-
-后台管理默认关闭，需按照如下方式开启：
-
-1. **绑定KV数据库**：
-
-   - 创建一个新的KV数据库
-
-     > ![](https://alist.sanyue.site/d/imgbed/202408261035367.png)
-     >
-     > ![](https://alist.sanyue.site/d/imgbed/202408261037971.png)
-
-   - 进入项目对应`设置`->`函数`->`KV 命名空间绑定`->`编辑绑定`->`变量名称`，填写`img_url`，KV命名空间选择刚才创建好的KV数据库
-
-2. **配置管理员认证**：
-
-   - 项目对应`设置`->`环境变量`->`为生产环境定义变量`->`编辑变量` ，添加`BASIC_USER`作为管理员用户名，`BASIC_PASS`作为管理员登录密码
-
-3. **重新部署项目**：
-
-   - 进入项目对应`部署`->`所有部署`，选择最新的一个，点击后面更多按钮（`···`），选择`重试部署`
-
-   - 部署完成后，访问`http(s)://你的域名/admin`即可进入后台管理页面
-
-#### 3.1.4图片审查
-
-支持成人内容审查和自动屏蔽，开启步骤如下：
-
-- 前往https://moderatecontent.com/ 注册并获得一个免费的用于审查图像内容的 API key
-- 打开 Cloudflare Pages 项目的管理页面，依次点击`设置`，`环境变量`，`添加环境变量`
-- 添加一个`变量名称`为`ModerateContentApiKey`，`值`为第一步获得的`API key`，点击`保存`即可
-
-#### 3.1.5Web和API上传认证
-
-环境变量增加认证码`AUTH_CODE`，值为你想要设置的认证码。
-
-Web端在登录页面输入你的**认证码**即可登录使用。
-
-API格式：
-
-| 接口名称     | /upload                                                      |
-| ------------ | ------------------------------------------------------------ |
-| **接口功能** | 上传图片或视频                                               |
-| **请求方法** | POST                                                         |
-| **请求参数** | **Query参数**：<br />`authCode`，string类型，即为你设置的认证码<br />**Body参数(application/form-data)**：<br />`file`，file类型，你要上传的文件 |
-| **返回响应** | `data[0].src`为获得的图片链接（注意不包含域名，需要自己添加） |
-
-> **请求示例**：
->
-> ```bash
-> curl --location --request POST 'https://your.domain/upload?authCode=your_authCode' \
-> 
-> --header 'User-Agent: Apifox/1.0.0 (https://apifox.com)' \
-> 
-> --form 'file=@"D:\\杂文件\\壁纸\\genshin109.jpg"'
-> ```
->
-> **响应示例**：
->
-> ```json
-> [
->     {
->         "src": "/file/738a8aaacf4d88d1590f9.jpg"
->     }
-> ]
-> ```
-
-#### 3.1.6访问域名限制
-
-环境变量增加`ALLOWED_DOMAINS`，多个允许的域名用英文`,`分割，如：`域名.xyz,域名.cloudns.be,域名.pp.ua`
-
-#### 3.1.7页面自定义（DIY接口）
-
-环境变量增加`USER_CONFIG`，JSON格式，具体字段用途及内容规范见下表。
-
-| 字段名      | 用途               | 类型        | 内容规范                                                     |
-| ----------- | ------------------ | ----------- | ------------------------------------------------------------ |
-| loginBkImg  | 自定义登录页面背景 | 列表/字符串 | 1、当字段类型为`列表`时，列表中元素为需要添加到轮播列表中的图片链接（列表中只有一张图时即为固定背景），形如`["1.jpg","2.jpg"]`<br />2、当字段类型为`字符串`时，目前**仅支持**字符串值为`bing`，设置为该值时启用bing随机图片轮播模式。 |
-| uploadBkImg | 自定义上传页面背景 | 列表/字符串 | 同上                                                         |
-| ownerName   | 页内图床名称       | 字符串      | 只支持`字符串`类型，设置为你自定义的图床名称（默认为`Sanyue`） |
-| logoUrl     | 页内图床Logo       | 字符串      | 只支持`字符串`类型，设置为你自定义的图床Logo链接             |
-| siteTitle   | 网站标题           | 字符串      | 只支持`字符串`类型，设置为你自定义的网站标题                 |
-| siteIcon    | 网站图标           | 字符串      | 只支持`字符串`类型，设置为你自定义的网站图标链接             |
-
-> 整体示例：
->
-> ```json
-> 轮播模式：
-> {
-> "uploadBkImg": ["https://imgbed.sanyue.site/file/6910f0b5e65ed462c1362.jpg","https://imgbed.sanyue.site/file/a73c97a1e8149114dc750.jpg"],
-> "loginBkImg":["https://imgbed.sanyue.site/file/ef803977f35a4ef4c03c2.jpg","https://imgbed.sanyue.site/file/0dbd5add3605a0b2e8994.jpg"],
-> "ownerName": "Sanyue",
-> "logoUrl": "https://demo-cloudflare-imgbed.pages.dev/random?type=img"
-> }
-> bing随机图模式：
-> {
-> "uploadBkImg": "bing",
-> "loginBkImg": "bing"
-> }
-> ```
-
-#### 3.1.8远端遥测
-
-便于开发者进行bug的捕捉和定位，但是**过程中可能收集到访问链接、域名等信息**，如您不愿意泄露类似信息给项目开发者，可在环境变量中添加`disable_telemetry`为`true`来退出遥测。
-
-#### 3.1.9随机图API
-
-| 接口名称     | /random                                                      |
-| ------------ | ------------------------------------------------------------ |
-| **接口功能** | 从图床中随机返回一张图片的链接（注意会消耗列出次数）         |
-| **前置条件** | 设置`AllowRandom`环境变量，值为`true`                        |
-| **请求方法** | GET                                                          |
-| **请求参数** | **Query参数**：<br />`type`：设为`img`时直接返回图片（此时form不生效）；设为`url`时返回完整url链接；否则返回随机图的文件路径。<br />`form`:设为`text`时直接返回文本，否则返回json格式内容。 |
-| **响应格式** | 1、当`type`为`img`时：<br />返回格式为`image/jpeg`<br />2、当`type`为其他值时：<br />当`form`不是`text`时，返回JSON格式内容，`data.url`为返回的链接/文件路径。<br />否则，直接返回链接/文件路径。 |
-
-> **请求示例**：
->
-> ```bash
-> curl --location --request GET 'https://your.domain/random' \
-> --header 'User-Agent: Apifox/1.0.0 (https://apifox.com)'
-> ```
->
-> **响应示例**：
->
-> ```json
-> {
->     "url": "/file/4fab4d423d039b4665a27.jpg"
-> }
-> ```
-
-#### 3.1.10注意！！！
-
-**修改环境变量方式**：
-
-![](https://alist.sanyue.site/d/imgbed/202408261040233.png)
-
-**修改环境变量后需要重新部署才能生效！**
-
-![](https://alist.sanyue.site/d/imgbed/202408261041507.png)
-
-### 3.2定制化修改
-
-按照`3.1`步骤部署完成后，前往仓库[MarSeventh/Sanyue-ImgHub](https://github.com/MarSeventh/Sanyue-ImgHub?tab=readme-ov-file)，按照操作说明进行DIY和打包操作，最后将打包好的`/dist`目录中的内容替换到该仓库的根目录下即可（复制+替换）。
-
-## 4.TODO
-
-### 4.1Add Features💕
+## TODO
 
 1. ~~增加粘贴图片上传功能（2024.7.22已完成）~~
 2. ~~增加markdown、html等格式链接复制功能（2024.7.21已完成）~~
-3. ~~上传页面增加管理端入口（2024.7.21已完成）~~
-4. 增加用户个性化配置接口
-   - ~~登录页面和上传页面背景图自定义（2024.8.25已完成）~~
-   - ~~图床名称和Logo自定义（2024.8.26已完成）~~
-   - ~~网站标题和Icon自定义（2024.8.26已完成）~~
-5. ~~增加随机图API（2024.7.25已完成）~~
-6. ~~完善多格式链接展示形式，增加ubb格式链接支持（2024.8.21已完成）~~
-7. ~~完善登录逻辑，后端增加认证码校验接口（2024.8.21已完成）~~
-8. ~~支持URL粘贴上传（2024.8.23已完成）~~
-9. ~~支持大于5MB的图片上传前自动压缩（2024.8.26已完成）~~
+3. ~~上传页面增加管理页面跳转按钮（2024.7.21已完成）~~
 
-### 4.2Fix Bugs👻
+## TIPS
 
-1. ~~修复API上传无法直接展示在后台的问题（2024.7.25已修复）~~
-
-## 5.Q&A
-
-### 5.1未设置`ALLOWED_DOMAINS`，但无法跨域访问？
-
-- 请检查你的cloudflare防火墙设置（例如hotlink保护是否开启）
-- 参见[Issue #8](https://github.com/MarSeventh/CloudFlare-ImgBed/issues/8)
-
-### 5.2如何通过PicGo上传？
-
-- PicGo插件设置中搜索`web-uploader`，安装可自定义前缀的版本，如图：
-
-  ![](https://alist.sanyue.site/d/imgbed/202408231141491.png)
-
-- 打开`图床设置`->`自定义Web图床`->`Default`，然后按照下图方式配置，注意API地址和自定义图片URL前缀按照自己的域名进行修改。（**如果设置了`AUTH_CODE`，一定以`?authCode=your_authCode`的方式添加到API地址后面**）：
-
-  ![](https://alist.sanyue.site/d/imgbed/202408261959174.png)
-
-- 设置完成，确定即可使用PicGo上传到自建的图床。
-
-## 6.Tips
-
-前端开源，参见[MarSeventh/Sanyue-ImgHub](https://github.com/MarSeventh/Sanyue-ImgHub?tab=readme-ov-file)项目。
+**一天手搓出来的前端，后续还会继续完善，有bug欢迎提出。**
 
 **如果觉得项目不错希望您能给个免费的star✨✨✨，非常感谢！**
-
-## 7.Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=MarSeventh/CloudFlare-ImgBed&type=Date)](https://star-history.com/#MarSeventh/CloudFlare-ImgBed&Date)
