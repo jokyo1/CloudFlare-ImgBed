@@ -9,12 +9,15 @@ const routes = [
     component: () => import('../views/UploadHome.vue'),
     beforeEnter: (to, from, next) => {
       const authCode = cookies.get('authCode')
+      /*
       if (authCode === null && to.name !== 'login') {
         ElMessage.error('请先认证！')
         next({ name: 'login' })
       } else {
         next()
       }
+      */
+       next()
     }
   },
   {
