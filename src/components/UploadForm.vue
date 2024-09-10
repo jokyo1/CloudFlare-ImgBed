@@ -47,12 +47,13 @@
                         </div>
                     </div>
                     
-             <div v-if="allLinks">
-                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4">
-                <template #prepend>URL:</template>
-                </el-input>
-                 <el-button type="primary" @click="copyAllLinks">复制</el-button>
-            </div>
+              <div v-if="allLinks" style="display: flex; align-items: center;">
+                        <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4" style="flex: 1; margin-right: 10px;">
+                            <template #prepend>URL:</template>
+                        </el-input>
+                        <el-button type="primary" @click="copyAllLinks">复制</el-button>
+             </div>
+                    
                     <div class="upload-list-item" v-for="file in fileList" :key="file.name" :span="8">
                         <a :href="file.url" target="_blank">
                             <img
