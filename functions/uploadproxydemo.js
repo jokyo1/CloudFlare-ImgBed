@@ -1,7 +1,7 @@
 // functions/upload.js
 export async function onRequest(context) {
     const { request } = context;
-    const url = 'https://demo-cloudflare-imgbed.pages.dev/upload?authCode=unset';
+    const url = 'https://demo-cloudflare-imgbed.pages.dev/upload?authCode=cfbed';
 
     // 转发请求
     const response = await fetch(url, {
