@@ -46,14 +46,6 @@
                             </el-button-group>
                         </div>
                     </div>
-                    
-              <div v-if="allLinks" style="display: flex; align-items: center;">
-                        <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4" style="flex: 1; margin-right: 10px;">
-                            <template #prepend>URL:</template>
-                        </el-input>
-                        <el-button type="primary" @click="copyAllLinks">复制</el-button>
-             </div>
-                    
                     <div class="upload-list-item" v-for="file in fileList" :key="file.name" :span="8">
                         <a :href="file.url" target="_blank">
                             <img
@@ -63,16 +55,12 @@
                                 >
                             </img>
                         </a>
-                           
                         <div class="upload-list-item-content">
                             <el-text class="upload-list-item-name" truncated>{{ file.name }}</el-text>
                             <div class="upload-list-item-url" v-if="file.status==='done'">
-                               
-
                                 <div class="upload-list-item-url-row">
-                                                             
                                     <el-input v-model="file.finalURL" size="small" readonly @focus="selectAllText">
-                                        <template #prepend>1URL:</template>
+                                        <template #prepend>URL:</template>
                                     </el-input>
                                     <el-input v-model="file.mdURL" size="small" readonly @focus="selectAllText">
                                         <template #prepend>MarkDown:</template>
@@ -103,7 +91,7 @@
                 </el-scrollbar>
             </div>
         </el-card>
-     </div>
+    </div>
 </template>
 
 <script>
@@ -130,8 +118,7 @@ data() {
         fileList: [],
         uploading: false,
         maxUploading: 10,
-        waitingList: [],
-        allLinks: '' // 新增的变量，用于存储所有链接
+        waitingList: []
     }
 },
 computed: {
@@ -196,42 +183,36 @@ methods: {
         })
     },
     handleSuccess(response, file) {
-    try {     
-        const rootUrl = `https://demo-cloudflare-imgbed.pages.dev/`
-        const fileItem = this.fileList.find(item => item.uid === file.uid);
-        fileItem.url = rootUrl + response.data[0].src;
-        fileItem.finalURL = rootUrl + response.data[0].src;
-        fileItem.mdURL = `!${file.name}`;
-        fileItem.htmlURL = `<img src="${rootUrl + response.data[0].src}" alt="${file.name}" width=100% />`;
-        fileItem.ubbURL = `[img]${rootUrl + response.data[0].src}[/img]`;
-        fileItem.progreess = 100;
-        fileItem.status = 'success';
-        this.$message({
-            type: 'success',
-            message: file.name + '上传成功'
-        });
-        setTimeout(() => {
-            fileItem.status = 'done';
-        }, 1000);
-        
-        // 将新上传的文件链接添加到 allLinks 中，并用回车符分隔
-        this.allLinks += fileItem.url + '\n';
-        
-    } catch (error) {
-        this.$message.error(file.name + '上传失败');
-        const fileItem = this.fileList.find(item => item.uid === file.uid);
-        fileItem.status = 'exception';
-    } finally {
-        if (this.uploadingCount + this.waitingCount === 0) {
-            this.uploading = false;
+        try {     
+            //const rootUrl = `${window.location.protocol}//${window.location.host}`
+            const rootUrl = `https://demo-cloudflare-imgbed.pages.dev/`
+            this.fileList.find(item => item.uid === file.uid).url = rootUrl + response.data[0].src
+            this.fileList.find(item => item.uid === file.uid).finalURL = rootUrl + response.data[0].src
+            this.fileList.find(item => item.uid === file.uid).mdURL = `![${file.name}](${rootUrl + response.data[0].src})`
+            this.fileList.find(item => item.uid === file.uid).htmlURL = `<img src="${rootUrl + response.data[0].src}" alt="${file.name}" width=100% />`
+            this.fileList.find(item => item.uid === file.uid).ubbURL = `[img]${rootUrl + response.data[0].src}[/img]`
+            this.fileList.find(item => item.uid === file.uid).progreess = 100
+            this.fileList.find(item => item.uid === file.uid).status = 'success'
+            this.$message({
+                type: 'success',
+                message: file.name + '上传成功'
+            })
+            setTimeout(() => {
+                this.fileList.find(item => item.uid === file.uid).status = 'done'
+            }, 1000)
+        } catch (error) {
+            this.$message.error(file.name + '上传失败')
+            this.fileList.find(item => item.uid === file.uid).status = 'exception'
+        } finally {
+            if (this.uploadingCount + this.waitingCount === 0) {
+                this.uploading = false
+            }
+            if (this.waitingList.length) {
+                const file = this.waitingList.shift()
+                this.uploadFile(file)
+            }
         }
-        if (this.waitingList.length) {
-            const file = this.waitingList.shift();
-            this.uploadFile(file);
-        }
-    }
-},
-
+    },
     handleError(err, file) {
         this.$message.error(file.name + '上传失败')
         this.fileList.find(item => item.uid === file.uid).status = 'exception'
@@ -480,13 +461,6 @@ methods: {
                 document.querySelector('.el-upload-dragger').style.pointerEvents = 'auto';
             }
      },
-     copyAllLinks() {
-            navigator.clipboard.writeText(this.allLinks).then(() => {
-                this.$message.success('链接已复制');
-            }).catch(() => {
-                this.$message.error('复制失败');
-            });
-        },
     selectAllText(event) {
         event.target.select()
     }
