@@ -51,6 +51,7 @@
                 <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4">
                 <template #prepend>URL:</template>
                 </el-input>
+                 <el-button type="primary" @click="copyAllLinks">复制</el-button>
             </div>
                     <div class="upload-list-item" v-for="file in fileList" :key="file.name" :span="8">
                         <a :href="file.url" target="_blank">
@@ -478,6 +479,13 @@ methods: {
                 document.querySelector('.el-upload-dragger').style.pointerEvents = 'auto';
             }
      },
+     copyAllLinks() {
+            navigator.clipboard.writeText(this.allLinks).then(() => {
+                this.$message.success('链接已复制');
+            }).catch(() => {
+                this.$message.error('复制失败');
+            });
+        },
     selectAllText(event) {
         event.target.select()
     }
