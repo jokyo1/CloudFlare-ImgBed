@@ -94,14 +94,13 @@
                     </div>
                 </el-scrollbar>
             </div>
+             <div v-if="allLinks">
+                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
+                <template #prepend>URL:</template>
+                </el-input>
+            </div>
         </el-card>
-    <div v-if="allLinks">
-    <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
-        <template #prepend>URL:</template>
-    </el-input>
-</div>
-
-    </div>
+     </div>
 </template>
 
 <script>
@@ -194,38 +193,42 @@ methods: {
         })
     },
     handleSuccess(response, file) {
-        try {     
-            //const rootUrl = `${window.location.protocol}//${window.location.host}`
-            const rootUrl = `https://demo-cloudflare-imgbed.pages.dev/`
-            this.fileList.find(item => item.uid === file.uid).url = rootUrl + response.data[0].src
-            this.fileList.find(item => item.uid === file.uid).finalURL = rootUrl + response.data[0].src
-            this.fileList.find(item => item.uid === file.uid).mdURL = `![${file.name}](${rootUrl + response.data[0].src})`
-            this.fileList.find(item => item.uid === file.uid).htmlURL = `<img src="${rootUrl + response.data[0].src}" alt="${file.name}" width=100% />`
-            this.fileList.find(item => item.uid === file.uid).ubbURL = `[img]${rootUrl + response.data[0].src}[/img]`
-            this.fileList.find(item => item.uid === file.uid).progreess = 100
-            this.fileList.find(item => item.uid === file.uid).status = 'success'
-            this.$message({
-                type: 'success',
-                message: file.name + '上传成功'
-            })
-            setTimeout(() => {
-                this.fileList.find(item => item.uid === file.uid).status = 'done'
-            }, 1000)
-        } catch (error) {
-            this.$message.error(file.name + '上传失败')
-            this.fileList.find(item => item.uid === file.uid).status = 'exception'
-        } finally {
-            if (this.uploadingCount + this.waitingCount === 0) {
-                this.uploading = false
-            }
-            if (this.waitingList.length) {
-                const file = this.waitingList.shift()
-                this.uploadFile(file)
-            }
-        }
+    try {     
+        const rootUrl = `https://demo-cloudflare-imgbed.pages.dev/`
+        const fileItem = this.fileList.find(item => item.uid === file.uid);
+        fileItem.url = rootUrl + response.data[0].src;
+        fileItem.finalURL = rootUrl + response.data[0].src;
+        fileItem.mdURL = `!${file.name}`;
+        fileItem.htmlURL = `<img src="${rootUrl + response.data[0].src}" alt="${file.name}" width=100% />`;
+        fileItem.ubbURL = `[img]${rootUrl + response.data[0].src}[/img]`;
+        fileItem.progreess = 100;
+        fileItem.status = 'success';
+        this.$message({
+            type: 'success',
+            message: file.name + '上传成功'
+        });
+        setTimeout(() => {
+            fileItem.status = 'done';
+        }, 1000);
+        
         // 将新上传的文件链接添加到 allLinks 中，并用回车符分隔
-            this.allLinks += file.url + '\n';
-    },
+        this.allLinks += fileItem.url + '\n';
+        
+    } catch (error) {
+        this.$message.error(file.name + '上传失败');
+        const fileItem = this.fileList.find(item => item.uid === file.uid);
+        fileItem.status = 'exception';
+    } finally {
+        if (this.uploadingCount + this.waitingCount === 0) {
+            this.uploading = false;
+        }
+        if (this.waitingList.length) {
+            const file = this.waitingList.shift();
+            this.uploadFile(file);
+        }
+    }
+},
+
     handleError(err, file) {
         this.$message.error(file.name + '上传失败')
         this.fileList.find(item => item.uid === file.uid).status = 'exception'
