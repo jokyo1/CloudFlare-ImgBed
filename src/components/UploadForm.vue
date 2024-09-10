@@ -196,7 +196,7 @@ methods: {
     },
     handleSuccess(response, file) {
     try {     
-        const rootUrl = `https://demo-cloudflare-imgbed.pages.dev/`
+        const rootUrl = `https://demo-cloudflare-imgbed.pages.dev`
         const fileItem = this.fileList.find(item => item.uid === file.uid);
         fileItem.url = rootUrl + response.data[0].src;
         fileItem.finalURL = rootUrl + response.data[0].src;
