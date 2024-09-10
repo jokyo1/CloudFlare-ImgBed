@@ -58,9 +58,16 @@
                         <div class="upload-list-item-content">
                             <el-text class="upload-list-item-name" truncated>{{ file.name }}</el-text>
                             <div class="upload-list-item-url" v-if="file.status==='done'">
+                               
+
                                 <div class="upload-list-item-url-row">
+                                     <!-- 新增的单个文本框，支持多行显示 -->
+                                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
+                                <template #prepend>URL:</template>
+                                </el-input>
+                                    
                                     <el-input v-model="file.finalURL" size="small" readonly @focus="selectAllText">
-                                        <template #prepend>URL:</template>
+                                        <template #prepend>1URL:</template>
                                     </el-input>
                                     <el-input v-model="file.mdURL" size="small" readonly @focus="selectAllText">
                                         <template #prepend>MarkDown:</template>
@@ -118,7 +125,8 @@ data() {
         fileList: [],
         uploading: false,
         maxUploading: 10,
-        waitingList: []
+        waitingList: [],
+        allLinks: '' // 新增的变量，用于存储所有链接
     }
 },
 computed: {
@@ -212,6 +220,8 @@ methods: {
                 this.uploadFile(file)
             }
         }
+        // 将新上传的文件链接添加到 allLinks 中，并用回车符分隔
+            this.allLinks += file.url + '\n';
     },
     handleError(err, file) {
         this.$message.error(file.name + '上传失败')
