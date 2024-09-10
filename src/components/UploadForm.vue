@@ -46,6 +46,12 @@
                             </el-button-group>
                         </div>
                     </div>
+                    
+             <div v-if="allLinks">
+                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4">
+                <template #prepend>URL:</template>
+                </el-input>
+            </div>
                     <div class="upload-list-item" v-for="file in fileList" :key="file.name" :span="8">
                         <a :href="file.url" target="_blank">
                             <img
@@ -93,11 +99,6 @@
                         </div>
                     </div>
                 </el-scrollbar>
-            </div>
-             <div v-if="allLinks">
-                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4">
-                <template #prepend>URL:</template>
-                </el-input>
             </div>
         </el-card>
      </div>
