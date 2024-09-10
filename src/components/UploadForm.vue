@@ -55,17 +55,14 @@
                                 >
                             </img>
                         </a>
+                           
                         <div class="upload-list-item-content">
                             <el-text class="upload-list-item-name" truncated>{{ file.name }}</el-text>
                             <div class="upload-list-item-url" v-if="file.status==='done'">
                                
 
                                 <div class="upload-list-item-url-row">
-                                     <!-- 新增的单个文本框，支持多行显示 -->
-                                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
-                                <template #prepend>URL:</template>
-                                </el-input>
-                                    
+                                                             
                                     <el-input v-model="file.finalURL" size="small" readonly @focus="selectAllText">
                                         <template #prepend>1URL:</template>
                                     </el-input>
@@ -98,6 +95,12 @@
                 </el-scrollbar>
             </div>
         </el-card>
+    <div v-if="allLinks">
+    <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
+        <template #prepend>URL:</template>
+    </el-input>
+</div>
+
     </div>
 </template>
 
