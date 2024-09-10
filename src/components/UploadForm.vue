@@ -151,7 +151,7 @@ methods: {
         const formData = new FormData()
         formData.append('file', file.file)
         axios({
-            url: 'https://demo-cloudflare-imgbed.pages.dev/upload' + '?authCode=' + cookies.get('authCode'),
+            url: 'https://demo-cloudflare-imgbed.pages.dev/upload' + '?authCode=unset',
             method: 'post',
             data: formData,
             onUploadProgress: (progressEvent) => {
