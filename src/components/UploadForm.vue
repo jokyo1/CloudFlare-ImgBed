@@ -95,7 +95,7 @@
                 </el-scrollbar>
             </div>
              <div v-if="allLinks">
-                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea">
+                <el-input v-model="allLinks" size="small" readonly @focus="selectAllText" type="textarea" :rows="4">
                 <template #prepend>URL:</template>
                 </el-input>
             </div>
