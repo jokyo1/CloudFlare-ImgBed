@@ -86,7 +86,7 @@ export async function onRequest(context) {
  //       fileData: fileData ? fileData.name : null
 //    }), {
 //        status: 500,
-/        headers: corsHeaders,
+//        headers: corsHeaders,
 //    });
 //    }
     
