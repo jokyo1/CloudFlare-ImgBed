@@ -23,9 +23,9 @@ export async function onRequest(context) {
             // 将请求体解析为 FormData 对象
         formData = await request.formData();
      // 输出 FormData 内容
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}:`, value);
-            }
+     //       for (let [key, value] of formData.entries()) {
+     //           console.log(`${key}:`, value);
+     //       }
     let fileData;
     // 获取文件
         fileData = formData.get("file");
@@ -39,9 +39,13 @@ export async function onRequest(context) {
     try {
 
          // 转发请求
+          // 输出 FormData 内容
+            for (let [key, value] of newFormDataformData.entries()) {
+                console.log(`${key}:`, value);
+            }
         const response = await fetch(uploadUrl, {
             method: 'POST',
-            headers: request.headers,
+        //    headers: request.headers,
             body:    newFormData,
         });
 
@@ -65,7 +69,7 @@ export async function onRequest(context) {
         });
     } catch (error) {
         console.log("FileData:", fileData);
-        console.log("FormData:", Object.fromEntries(formData.entries()));
+      //  console.log("FormData:", Object.fromEntries(formData.entries()));
 
         return new Response(JSON.stringify({
     status: 500,
