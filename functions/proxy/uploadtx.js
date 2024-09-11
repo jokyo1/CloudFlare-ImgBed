@@ -15,7 +15,11 @@ export async function onRequest(context) {
       },
     });
   }
-
+    
+ const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Max-Age': '86400', // 24 hours
+    };
 
   try {
 
@@ -55,10 +59,7 @@ export async function onRequest(context) {
       "name": jsonResponse.filekey
     }
 
-   const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Max-Age': '86400', // 24 hours
-    };
+  
     // 返回响应
     return new Response(resurl, {
         status: response.status,
