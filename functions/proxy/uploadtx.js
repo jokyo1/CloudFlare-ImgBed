@@ -36,7 +36,7 @@ export async function onRequest(context) {
         const newFormData = new FormData();
         newFormData.append("media", fileData, fileData.name);
     // 输出 FormData 内容
-            for (let [key, value] of newFormDataformData.entries()) {
+            for (let [key, value] of newFormData.entries()) {
                 console.log(`${key}:`, value);
             }
 
