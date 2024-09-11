@@ -46,7 +46,9 @@ export async function onRequest(context) {
         });
 
         const jsonResponse = await response.json();
+        console.log("jsonResponse=",jsonResponse);
         const resurl = jsonResponse.url;
+        console.log("resurl=",resurl);
         const data = {
             "url": resurl,
             "code": 200,
