@@ -38,7 +38,7 @@ export async function onRequest(context) {
   'Access-Control-Max-Age': '86400', // 24 hours
     };
     // 返回响应
-    return new Response.json(data, {
+    return new Response(data, {
         status: response.status,
         headers: {
             ...corsHeaders,
@@ -46,7 +46,7 @@ export async function onRequest(context) {
         },
     });
     } catch (error) {
-    return Response.json({
+    return Response({
       status: 500,
       success: false
         }
