@@ -61,6 +61,7 @@ export async function onRequest(context) {
      //   };
 
         // 返回响应
+    if(resurl){
         return new Response(resurl, {
             status: response.status,
             headers: {
@@ -68,14 +69,15 @@ export async function onRequest(context) {
                 ...response.headers,
             },
         });
+    }
     
   //  } catch (error) {
    //     console.log("FileData:", fileData);
       //  console.log("FormData:", Object.fromEntries(formData.entries()));
 
-  //      return new Response(JSON.stringify({
-  //  status: 500,
-  //  success: false,
+        return new Response(JSON.stringify({
+    status: 500,
+    success: false,
   //  formData: {
   //      file: fileData ? {
    //         name: fileData.name,
@@ -84,10 +86,10 @@ export async function onRequest(context) {
     //    } : null
   //  },
  //       fileData: fileData ? fileData.name : null
-//    }), {
-//        status: 500,
-//        headers: corsHeaders,
-//    });
+    }), {
+        status: 500,
+        headers: corsHeaders,
+    });
 //    }
     
 }
