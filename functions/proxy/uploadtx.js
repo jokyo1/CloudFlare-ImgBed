@@ -16,11 +16,6 @@ export async function onRequest(context) {
     });
   }
 
-    // 函数用于检查文件类型是否为图片或视频
-    function isMedia(file) {
-      const mediaTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/avi'];
-      return mediaTypes.includes(file.type);
-    }
 
   try {
 
@@ -30,10 +25,10 @@ export async function onRequest(context) {
 
 // 遍历 FormData 中的所有文件
 //    for (const [key, value] of formData.entries()) {
-     // if (value instanceof File && isMedia(value)) {
-        // 如果文件是图片或视频，修改字段名为 "media"
-     //   formData.delete(key);
-    //    formData.append('media', value);
+        if (key === "file" && value instanceof File && isMedia(value)) {
+    // 如果字段名是 "file" 且文件是图片或视频，修改字段名为 "media"
+        formData.delete(key);
+        formData.append('media', value);
      // }
  //   }
       
@@ -77,3 +72,9 @@ export async function onRequest(context) {
       })
     }
 }
+
+    // 函数用于检查文件类型是否为图片或视频
+    function isMedia(file) {
+      const mediaTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/avi'];
+      return mediaTypes.includes(file.type);
+    }
