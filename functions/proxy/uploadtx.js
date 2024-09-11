@@ -32,16 +32,13 @@ export async function onRequest(context) {
         if (!fileData) {
             console.log("File not found in formData");
         }
+               // 创建新的 FormData 对象并添加文件
+        const newFormData = new FormData();
+        newFormData.append("media", fileData, fileData.name);
 
     try {
 
-            // 创建新的 FormData 对象并添加文件
-        const newFormData = new FormData();
-        if (fileData) {
-            newFormData.append("media", fileData);
-        }
-
-        // 转发请求
+         // 转发请求
         const response = await fetch(uploadUrl, {
             method: 'POST',
             headers: request.headers,
