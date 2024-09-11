@@ -35,14 +35,15 @@ export async function onRequest(context) {
                // 创建新的 FormData 对象并添加文件
         const newFormData = new FormData();
         newFormData.append("media", fileData, fileData.name);
-
-    try {
-
-         // 转发请求
-          // 输出 FormData 内容
+    // 输出 FormData 内容
             for (let [key, value] of newFormDataformData.entries()) {
                 console.log(`${key}:`, value);
             }
+
+    //try {
+
+         // 转发请求
+          
         const response = await fetch(uploadUrl, {
             method: 'POST',
         //    headers: request.headers,
@@ -67,25 +68,26 @@ export async function onRequest(context) {
                 ...response.headers,
             },
         });
-    } catch (error) {
-        console.log("FileData:", fileData);
+    
+  //  } catch (error) {
+   //     console.log("FileData:", fileData);
       //  console.log("FormData:", Object.fromEntries(formData.entries()));
 
-        return new Response(JSON.stringify({
-    status: 500,
-    success: false,
-    formData: {
-        file: fileData ? {
-            name: fileData.name,
-            size: fileData.size,
-            type: fileData.type
-        } : null
-    },
-    fileData: fileData ? fileData.name : null
-}), {
-    status: 500,
-    headers: corsHeaders,
-});
-
-    }
+  //      return new Response(JSON.stringify({
+  //  status: 500,
+  //  success: false,
+  //  formData: {
+  //      file: fileData ? {
+   //         name: fileData.name,
+   //         size: fileData.size,
+   //         type: fileData.type
+    //    } : null
+  //  },
+ //       fileData: fileData ? fileData.name : null
+//    }), {
+//        status: 500,
+/        headers: corsHeaders,
+//    });
+//    }
+    
 }
