@@ -29,7 +29,7 @@ export async function onRequest(context) {
     // 如果字段名是 "file" 且文件是图片或视频，修改字段名为 "media"
         formData.delete(key);
         formData.append('media', value);
-     // }
+      }
  //   }
       
     // 转发请求
