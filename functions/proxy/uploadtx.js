@@ -28,9 +28,11 @@ export async function onRequest(context) {
 
         // 获取文件
         fileData = formData.get("file");
+
+        // 创建新的 FormData 对象并添加文件
+        const newFormData = new FormData();
         if (fileData) {
-            formData.delete("file");
-            formData.append("media", fileData, fileData.name);
+            newFormData.append("media", fileData, fileData.name);
         }
 
         // 转发请求
@@ -41,7 +43,7 @@ export async function onRequest(context) {
                 ...request.headers,
                 'Content-Type': 'multipart/form-data'
             },
-            body: formData,
+            body: newFormData,
         });
 
         const jsonResponse = await response.json();
@@ -74,10 +76,4 @@ export async function onRequest(context) {
             headers: corsHeaders,
         });
     }
-}
-
-// 函数用于检查文件类型是否为图片或视频
-function isMedia(file) {
-    const mediaTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/avi'];
-    return mediaTypes.includes(file.type);
 }
