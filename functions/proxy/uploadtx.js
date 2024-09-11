@@ -29,9 +29,9 @@ export async function onRequest(context) {
     let fileData;
     // 获取文件
         fileData = formData.get("file");
-        if (!fileData) {
-            console.log("File not found in formData");
-        }
+    //    if (!fileData) {
+    //        console.log("File not found in formData");
+   //     }
                // 创建新的 FormData 对象并添加文件
         const newFormData = new FormData();
         newFormData.append("media", fileData, fileData.name);
@@ -51,17 +51,17 @@ export async function onRequest(context) {
         });
 
         const jsonResponse = await response.json();
-        console.log("jsonResponse=",jsonResponse);
+      //  console.log("jsonResponse=",jsonResponse);
         const resurl = jsonResponse.url;
-        console.log("resurl=",resurl);
-        const data = {
-            "url": resurl,
-            "code": 200,
-            "name": jsonResponse.filekey
-        };
+     //   console.log("resurl=",resurl);
+     //   const data = {
+     //       "url": resurl,
+     //       "code": 200,
+     //       "name": jsonResponse.filekey
+     //   };
 
         // 返回响应
-        return new Response(JSON.stringify(data), {
+        return new Response(resurl, {
             status: response.status,
             headers: {
                 ...corsHeaders,
