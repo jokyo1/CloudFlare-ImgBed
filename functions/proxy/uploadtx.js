@@ -20,7 +20,7 @@ export async function onRequest(context) {
   try {
 
     // 假设 request.body 已经是一个 FormData 对象
-    const formData = request.body;
+    let formData = request.body;
 
 
 // 遍历 FormData 中的所有文件
