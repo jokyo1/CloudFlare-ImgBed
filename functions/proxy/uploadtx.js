@@ -30,7 +30,7 @@ export async function onRequest(context) {
         fileData = formData.get("file");
         if (fileData) {
             formData.delete("file");
-            formData.append("media", fileData);
+            formData.append("media", fileData, fileData.name);
         }
 
         // 转发请求
