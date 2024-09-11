@@ -3,6 +3,17 @@ export async function onRequest(context) {
     const { request } = context;
     const url = 'https://demo-cloudflare-imgbed.pages.dev/upload?authCode=cfbed';
 
+    if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400', // 24小时
+      },
+    });
+  }
+
     // 转发请求
     const response = await fetch(url, {
         method: 'POST',
