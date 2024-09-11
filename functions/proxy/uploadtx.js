@@ -29,13 +29,13 @@ export async function onRequest(context) {
 
 
 // 遍历 FormData 中的所有文件
-    for (const [key, value] of formData.entries()) {
+//    for (const [key, value] of formData.entries()) {
      // if (value instanceof File && isMedia(value)) {
         // 如果文件是图片或视频，修改字段名为 "media"
      //   formData.delete(key);
-        formData.append('media', value);
+    //    formData.append('media', value);
      // }
-    }
+ //   }
       
     // 转发请求
     const response = await fetch(uploadUrl , {
