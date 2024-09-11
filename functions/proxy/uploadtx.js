@@ -17,10 +17,19 @@ export async function onRequest(context) {
     const jsonResponse = await response.json();
     const url = jsonResponse.url;
 
+   const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Max-Age': '86400', // 24 hours
+  'Content-Type': 'application/json'
+    };
     // 返回响应
     return new Response(url, {
         status: response.status,
-        headers: response.headers,
+        headers: {
+            ...corsHeaders,
+            ...response.headers,
+        },
     });
 
 }
