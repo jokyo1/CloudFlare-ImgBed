@@ -19,11 +19,11 @@ export async function onRequest(context) {
         'Access-Control-Max-Age': '86400', // 24 hours
     };
 
-    try {
-        // 假设 request.body 已经是一个 FormData 对象
+      // 假设 request.body 已经是一个 FormData 对象
         let formData = await request.formData();
 
-        // 遍历 FormData 中的所有文件
+    try {
+              // 遍历 FormData 中的所有文件
         for (const [key, value] of formData.entries()) {
             if (key === "file") {
                 // 如果字段名是 "file"，修改字段名为 "media"
