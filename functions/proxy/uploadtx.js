@@ -16,6 +16,7 @@ export async function onRequest(context) {
     });
   }
 
+  try {
     // 转发请求
     const response = await fetch(uploadUrl , {
         method: 'POST',
@@ -39,5 +40,9 @@ export async function onRequest(context) {
             ...response.headers,
         },
     });
-
+    } catch (error) {
+    return Response.json({
+      status: 500,
+      success: false
+    }
 }
