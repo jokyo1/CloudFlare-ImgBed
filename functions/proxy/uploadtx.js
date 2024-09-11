@@ -20,11 +20,11 @@ export async function onRequest(context) {
     };
 
     let formData;
+            // 将请求体解析为 FormData 对象
+        formData = await request.formData();
     let fileData;
 
     try {
-        // 将请求体解析为 FormData 对象
-        formData = await request.formData();
 
         // 获取文件
         fileData = formData.get("file");
