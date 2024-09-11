@@ -69,7 +69,7 @@ export async function onRequest(context) {
         },
     });
     } catch (error) {
-    return Response({
+    return new Response({
       status: 500,
       success: false
         }
