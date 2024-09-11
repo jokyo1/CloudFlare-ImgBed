@@ -33,7 +33,7 @@ export async function onRequest(context) {
   'Access-Control-Max-Age': '86400', // 24 hours
     };
     // 返回响应
-    return new Response(jsonResponse, {
+    return new Response.json(jsonResponse, {
         status: response.status,
         headers: {
             ...corsHeaders,
