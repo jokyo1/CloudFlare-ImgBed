@@ -22,6 +22,10 @@ export async function onRequest(context) {
     let formData;
             // 将请求体解析为 FormData 对象
         formData = await request.formData();
+     // 输出 FormData 内容
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value);
+            }
     let fileData;
 
     try {
