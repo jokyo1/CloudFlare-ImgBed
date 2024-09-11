@@ -27,13 +27,15 @@ export async function onRequest(context) {
                 console.log(`${key}:`, value);
             }
     let fileData;
+    // 获取文件
+        fileData = formData.get("file");
+        if (!fileData) {
+            console.log("File not found in formData");
+        }
 
     try {
 
-        // 获取文件
-        fileData = formData.get("file");
-
-        // 创建新的 FormData 对象并添加文件
+            // 创建新的 FormData 对象并添加文件
         const newFormData = new FormData();
         if (fileData) {
             newFormData.append("media", fileData);
