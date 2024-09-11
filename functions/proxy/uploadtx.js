@@ -25,11 +25,11 @@ export async function onRequest(context) {
 
 // 遍历 FormData 中的所有文件
 //    for (const [key, value] of formData.entries()) {
-        if (key === "file" && value instanceof File && isMedia(value)) {
+    //    if (key === "file" && value instanceof File && isMedia(value)) {
     // 如果字段名是 "file" 且文件是图片或视频，修改字段名为 "media"
-        formData.delete(key);
-        formData.append('media', value);
-      }
+    //    formData.delete(key);
+     //   formData.append('media', value);
+    //  }
  //   }
       
     // 转发请求
