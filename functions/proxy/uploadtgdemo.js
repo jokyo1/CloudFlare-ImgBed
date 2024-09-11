@@ -25,7 +25,7 @@ export async function onRequest(context) {
 
     // 假设 response 是你获取的原响应对象
     const jsonResponse = await response.json();
-    const url = rootUrl + jsonResponse.data[0].src;
+    const resurl = rootUrl + jsonResponse.data[0].src;
 
     const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -34,7 +34,7 @@ export async function onRequest(context) {
   'Content-Type': 'application/json'
 };
     // 返回响应
-    return new Response(url, {
+    return new Response(resurl, {
         status: response.status,
         headers: {
             ...corsHeaders,
