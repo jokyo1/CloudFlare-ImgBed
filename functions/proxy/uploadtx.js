@@ -44,6 +44,11 @@ export async function onRequest(context) {
     return Response.json({
       status: 500,
       success: false
-        })
+        }
+        
+      , {
+        status: 500,
+        headers: corsHeaders,
+      })
     }
 }
