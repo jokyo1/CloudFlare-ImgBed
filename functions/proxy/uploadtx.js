@@ -19,20 +19,17 @@ export async function onRequest(context) {
         'Access-Control-Max-Age': '86400', // 24 hours
     };
 
-      // 假设 request.body 已经是一个 FormData 对象
-      //  let formData = await request.formData();
-        let formData = request.body;
-        let fileData ;
+    let formData;
 
     try {
-              // 遍历 FormData 中的所有文件
-        for (const [key, value] of formData.entries()) {
-            if (key === "file") {
-                // 如果字段名是 "file"，修改字段名为 "media"
-                fileData = value;
-                formData.delete(key);
-                formData.append("media", fileData);
-            }
+        // 假设 request.body 已经是一个 FormData 对象
+        formData = await request.formData();
+
+        // 获取文件
+        const fileData = formData.get("file");
+        if (fileData) {
+            formData.delete("file");
+            formData.append("media", fileData);
         }
 
         // 转发请求
@@ -62,8 +59,7 @@ export async function onRequest(context) {
         return new Response(JSON.stringify({
             status: 500,
             success: false,
-            formData: Object.fromEntries(formData.entries()),
-            olddata:  Object.fromEntries(fileData.entries())
+            formData: formData ? Object.fromEntries(formData.entries()) : null
         }), {
             status: 500,
             headers: corsHeaders,
