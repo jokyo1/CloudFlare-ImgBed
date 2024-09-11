@@ -25,7 +25,8 @@ export async function onRequest(context) {
 
 // 遍历 FormData 中的所有文件
     for (const [key, value] of formData.entries()) {
-        if (key === "file" && value instanceof File && isMedia(value)) {
+     //   if (key === "file" && value instanceof File && isMedia(value)) {
+          if (key === "file") {
     // 如果字段名是 "file" 且文件是图片或视频，修改字段名为 "media"
     // 先存储文件数据
     const fileData = value;
