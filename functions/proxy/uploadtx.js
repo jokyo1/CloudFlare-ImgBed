@@ -26,14 +26,19 @@ export async function onRequest(context) {
 
    // 假设 response 是你获取的原响应对象
     const jsonResponse = await response.json();
-    const url = jsonResponse.url;
+    const resurl = jsonResponse.url;
+      const data = {
+      "url": resurl,
+      "code": 200,
+      "name": jsonResponse.filekey
+    }
 
    const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Max-Age': '86400', // 24 hours
     };
     // 返回响应
-    return new Response(url, {
+    return new Response.json(data, {
         status: response.status,
         headers: {
             ...corsHeaders,
