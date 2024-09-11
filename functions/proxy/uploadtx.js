@@ -20,15 +20,16 @@ export async function onRequest(context) {
     };
 
       // 假设 request.body 已经是一个 FormData 对象
-        let formData = await request.formData();
-        const oldData = await request.formData();
+      //  let formData = await request.formData();
+        let formData = request.body;
+        let fileData ;
 
     try {
               // 遍历 FormData 中的所有文件
         for (const [key, value] of formData.entries()) {
             if (key === "file") {
                 // 如果字段名是 "file"，修改字段名为 "media"
-                const fileData = value;
+                fileData = value;
                 formData.delete(key);
                 formData.append("media", fileData);
             }
@@ -62,7 +63,7 @@ export async function onRequest(context) {
             status: 500,
             success: false,
             formData: Object.fromEntries(formData.entries()),
-            olddata:  Object.fromEntries(oldData.entries())
+            olddata:  Object.fromEntries(fileData.entries())
         }), {
             status: 500,
             headers: corsHeaders,
