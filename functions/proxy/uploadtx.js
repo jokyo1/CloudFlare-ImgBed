@@ -32,18 +32,14 @@ export async function onRequest(context) {
         // 创建新的 FormData 对象并添加文件
         const newFormData = new FormData();
         if (fileData) {
-            newFormData.append("media", fileData, fileData.name);
+            newFormData.append("media", fileData);
         }
 
         // 转发请求
         const response = await fetch(uploadUrl, {
             method: 'POST',
-            // 确保 Content-Type 头正确设置
-            headers: {
-                ...request.headers,
-                'Content-Type': 'multipart/form-data'
-            },
-            body: newFormData,
+            headers: request.headers,
+            body:    newFormData,
         });
 
         const jsonResponse = await response.json();
