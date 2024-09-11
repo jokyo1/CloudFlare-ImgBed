@@ -69,13 +69,20 @@ export async function onRequest(context) {
         console.log("FormData:", Object.fromEntries(formData.entries()));
 
         return new Response(JSON.stringify({
-            status: 500,
-            success: false,
-            formData: formData ? Object.fromEntries(formData.entries()) : null,
-            fileData: fileData ? fileData.name : null
-        }), {
-            status: 500,
-            headers: corsHeaders,
-        });
+    status: 500,
+    success: false,
+    formData: {
+        file: fileData ? {
+            name: fileData.name,
+            size: fileData.size,
+            type: fileData.type
+        } : null
+    },
+    fileData: fileData ? fileData.name : null
+}), {
+    status: 500,
+    headers: corsHeaders,
+});
+
     }
 }
