@@ -29,9 +29,7 @@ export async function onRequest(context) {
 
    const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Max-Age': '86400', // 24 hours
-  'Content-Type': 'application/json'
     };
     // 返回响应
     return new Response(url, {
