@@ -22,7 +22,7 @@ export async function onRequest(context) {
     let formData;
 
     try {
-        // 假设 request.body 已经是一个 FormData 对象
+        // 将请求体解析为 FormData 对象
         formData = await request.formData();
 
         // 获取文件
@@ -35,7 +35,11 @@ export async function onRequest(context) {
         // 转发请求
         const response = await fetch(uploadUrl, {
             method: 'POST',
-            headers: request.headers,
+            // 确保 Content-Type 头正确设置
+            headers: {
+                ...request.headers,
+                'Content-Type': 'multipart/form-data'
+            },
             body: formData,
         });
 
