@@ -5,6 +5,16 @@ export async function onRequest(context) {
  // 腾讯的上传URL
     const uploadUrl = "https://openai.weixin.qq.com/weixinh5/webapp/h774yvzC2xlB4bIgGfX2stc4kvC85J/cos/upload";
 
+    if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '86400', // 24小时
+      },
+    });
+  }
 
     // 转发请求
     const response = await fetch(uploadUrl , {
