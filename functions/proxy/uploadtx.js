@@ -20,13 +20,14 @@ export async function onRequest(context) {
     };
 
     let formData;
+    let fileData;
 
     try {
         // 将请求体解析为 FormData 对象
         formData = await request.formData();
 
         // 获取文件
-        const fileData = formData.get("file");
+        fileData = formData.get("file");
         if (fileData) {
             formData.delete("file");
             formData.append("media", fileData);
@@ -60,10 +61,14 @@ export async function onRequest(context) {
             },
         });
     } catch (error) {
+        console.log("FileData:", fileData);
+        console.log("FormData:", Object.fromEntries(formData.entries()));
+
         return new Response(JSON.stringify({
             status: 500,
             success: false,
-            formData: formData ? Object.fromEntries(formData.entries()) : null
+            formData: formData ? Object.fromEntries(formData.entries()) : null,
+            fileData: fileData ? fileData.name : null
         }), {
             status: 500,
             headers: corsHeaders,
