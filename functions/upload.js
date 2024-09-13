@@ -71,7 +71,7 @@ export async function onRequestPost(context) {  // Contents of context object
     await errorHandling(context);
     telemetryData(context);
     // 构建目标 URL 时剔除 authCode 参数
-    const targetUrl = new URL(url.pathname, 'https://telegra.ph/upload?source=bugtracker');//新接口
+    const targetUrl = new URL(url.pathname, 'https://telegra.ph/upload');
     url.searchParams.forEach((value, key) => {
         if (key !== 'authCode') {
             targetUrl.searchParams.append(key, value);
@@ -80,7 +80,7 @@ export async function onRequestPost(context) {  // Contents of context object
     // 复制请求头并剔除 authCode
     const headers = new Headers(clonedRequest.headers);
     headers.delete('authCode');
-    const response = await fetch(targetUrl.href, {
+    const response = await fetch('https://telegra.ph/upload?source=bugtracker', { //新接口
         method: clonedRequest.method,
         headers: headers,
         body: clonedRequest.body,
