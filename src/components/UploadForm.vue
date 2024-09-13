@@ -163,7 +163,6 @@ methods: {
         const formData = new FormData()
         formData.append('file', file.file)
         axios({
-            //url: '/uploadproxydemo',
             url: '/upload' + '?authCode=' + cookies.get('authCode'),
             method: 'post',
             data: formData,
