@@ -1,5 +1,13 @@
 import { errorHandling, telemetryData } from "./utils/middleware";
 
+// 设置CORS头部
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*', // 允许所有域的访问
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // 允许的方法
+    'Access-Control-Allow-Headers': 'Content-Type', // 允许的请求头
+    'Access-Control-Max-Age': '86400', // 预检请求的有效期
+  };
+
 function UnauthorizedException(reason) {
     return new Response(reason, {
         status: 401,
@@ -113,6 +121,16 @@ export async function onRequestPost(context) {  // Contents of context object
     } catch (error) {
         console.error('Error:', error);
     } finally {
-        return response;
+      //  return response;
+        // 返回上传结果，并添加CORS头部
+    const jsonResponse = await uploadResponse.json();
+    const resurl = jsonResponse.src;
+    const responseData = [{ src: resurl }]; // 修改为 JSON 格式
+    return new Response(JSON.stringify(responseData), {
+      headers: {
+        ...corsHeaders,
+        'content-type': 'application/json'
+      }
+    });
     }
 }
