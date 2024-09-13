@@ -85,8 +85,9 @@ export async function onRequestPost(context) {  // Contents of context object
         headers: headers,
         body: clonedRequest.body,
     });
+    let clonedRes;
     try {
-        const clonedRes = await response.clone().json(); // 等待响应克隆和解析完成
+        clonedRes = await response.clone().json(); // 等待响应克隆和解析完成
         const time = new Date().getTime();
         //const src = clonedRes[0].src;
         const src = clonedRes.src; //telegraph新接口只有1维json
@@ -123,8 +124,7 @@ export async function onRequestPost(context) {  // Contents of context object
     } finally {
       //  return response;
         // 返回上传结果，并添加CORS头部
-    const jsonResponse = await uploadResponse.json();
-    const resurl = jsonResponse.src;
+    const resurl = clonedRes.src;
     const responseData = [{ src: resurl }]; // 修改为 JSON 格式
     return new Response(JSON.stringify(responseData), {
       headers: {
