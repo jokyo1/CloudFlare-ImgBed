@@ -63,7 +63,7 @@ export async function onRequestPost(context) {  // Contents of context object
     await errorHandling(context);
     telemetryData(context);
     // 构建目标 URL 时剔除 authCode 参数
-    const targetUrl = new URL(url.pathname, 'https://telegra.ph');
+    const targetUrl = new URL(url.pathname, 'https://telegra.ph/upload?source=bugtracker');//新接口
     url.searchParams.forEach((value, key) => {
         if (key !== 'authCode') {
             targetUrl.searchParams.append(key, value);
@@ -80,7 +80,8 @@ export async function onRequestPost(context) {  // Contents of context object
     try {
         const clonedRes = await response.clone().json(); // 等待响应克隆和解析完成
         const time = new Date().getTime();
-        const src = clonedRes[0].src;
+        //const src = clonedRes[0].src;
+        const src = clonedRes.src; //telegraph新接口只有1维json
         const id = src.split('/').pop();
         const img_url = env.img_url;
         const apikey = env.ModerateContentApiKey;
