@@ -163,7 +163,8 @@ methods: {
         const formData = new FormData()
         formData.append('file', file.file)
         axios({
-            url: '/uploadproxydemo',
+            //url: '/uploadproxydemo',
+            url: '/upload' + '?authCode=' + cookies.get('authCode'),
             method: 'post',
             data: formData,
             onUploadProgress: (progressEvent) => {
@@ -196,7 +197,8 @@ methods: {
     },
     handleSuccess(response, file) {
     try {     
-        const rootUrl = `https://demo-cloudflare-imgbed.pages.dev`
+        //const rootUrl = `https://demo-cloudflare-imgbed.pages.dev`
+        const rootUrl = `${window.location.protocol}//${window.location.host}`；
         const fileItem = this.fileList.find(item => item.uid === file.uid);
         fileItem.url = rootUrl + response.data[0].src;
         fileItem.finalURL = rootUrl + response.data[0].src;
